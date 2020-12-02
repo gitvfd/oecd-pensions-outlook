@@ -1,0 +1,414 @@
+<doctype HTML>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<head>
+
+	<link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,400i,700,700i|Oswald:200,300,400,500,600,700&display=swap&subset=latin-ext" rel="stylesheet">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/site.css">
+<script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc="
+	crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+	 
+<script src="libs/d3.v4.min.js"></script>
+	<script src="libs/d3.v4.jetpack.min.js"></script>
+	<script src="libs/d3-scale-chromatic.v1.min.js"></script>
+	<script src="libs/topojson.v1.min.js"></script>
+	<script src="libs/d3-queue.v3.min.js"></script>
+	<script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+	<link rel="icon" href="img/favicon.ico" >
+<script>
+
+	dataLayer = [{
+
+		"siteName": "oecd.github.io/OECD-covid-action-map",
+
+		"siteEnvironment": "live",
+
+		"pageLanguage": "en",         // or "en" or "es"
+
+		"contentLanguage": "English",  // or "English" or "French"
+
+		"pageTopic": "Coronavirus",
+
+		"pageSubTopic": "",
+
+		"pageCountry": "",
+
+		"pageCategory": ""
+
+	}];
+
+</script>
+
+
+
+<!-- Google Tag Manager -->
+
+<script>(function (w, d, s, l, i) {
+		w[l] = w[l] || []; w[l].push({
+			'gtm.start':
+
+				new Date().getTime(), event: 'gtm.js'
+		}); var f = d.getElementsByTagName(s)[0],
+
+			j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+
+				'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+
+	})(window, document, 'script', 'dataLayer', 'GTM-P5JSM4P');</script>
+
+ <!--End Google Tag Manager -->
+</head>
+
+<body>
+
+	<!-- Google Tag Manager (noscript) -->
+	
+	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P5JSM4P" height="0" width="0"
+			style="display:none;visibility:hidden"></iframe></noscript>
+	
+	<!--End Google Tag Manager (noscript) -->
+
+<h1>Responses to COVID-19 in the area of retirement savings </h1>
+	<div class="flex-container">
+		<button class="button grey" id="Dimension" type="submit" value="Limiting" onclick="updateMap(value)"><span class="textbtn">Limiting the materialisation of investment losses </span></button>
+		<button class="button grey" id="Dimension" type="submit" value="Securing" onclick="updateMap(value)"><span class="textbtn">Securing the solvency of retirement plans and the business of providers </span></button>
+		<button class="button grey" id="Dimension" type="submit" value="Subsidising" onclick="updateMap(value)"><span class="textbtn">Subsidising pension contributions </span></button>
+		<button class="button grey" id="Dimension" type="submit" value="Addressing" onclick="updateMap(value)"><span class="textbtn">Addressing operational disruptions</span></button>
+		<button class="button grey" id="Dimension" type="submit" value="Protecting" onclick="updateMap(value)"><span class="textbtn">Protecting from scams and cyber attacks</span></button>
+		<button class="button grey" id="Dimension" type="submit" value="Providing" onclick="updateMap(value)"><span class="textbtn">Providing short-term relief with potential long-term risks</span></button>
+	</div>
+	<div class="flex-container" id="introIndex">e.g. communicating the consequences of switches and withdrawals	</div>
+	<!--<div class="flex-container-legend" id="legendChoropleth">
+		<div id="navigHeader">Level:</div>
+		<div id="scaleLegend"></div>
+		<div id="resetButton"><img id="resetcross" src="img/cross.svg"> <span id= resetText>Reset map &nbsp;</span></div>
+	
+	</div>-->
+	<div id="aboutMap"></div>
+
+
+
+</body>
+<script type="text/javascript">
+
+
+	var popupWidth;
+	var heightChart ;
+	var margin_chart
+	var xScale;
+	var yScale ;
+
+	var selector = "allcontext";
+	var selectorArray, selectorVariables; 
+	var worldData, allData;
+
+	var allcircles=[];
+	var country4card;
+
+	var urls = {
+	    world: "data/world.json",
+	    country:"data/coord_country.tsv",
+		data: "data/data.tsv"
+	};
+
+	var divMap = d3.select("body").append("div") 
+	    .attr("class", "tooltip")       
+	    .style("opacity", 0);
+
+    var format = d3.format(",.1f");
+    var margin = 20,centered;
+
+	var mapRatio=0.41;
+	var mapScale;
+    
+    var width = document.getElementById("aboutMap").offsetWidth,
+    	height= width*mapRatio;
+
+	
+	var mapColor=d3.scaleOrdinal()
+			.domain(["Limiting", "Securing", "Subsidising", "Addressing","Protecting","Providing"])
+			.range(['#804080', '#e73741', '#309e4d', '#0d809b', '#04629a', '#aa006f'])
+
+
+	var mapEquivalence=d3.scaleOrdinal()
+			.domain(["Limiting", "Securing", "Subsidising", "Addressing","Protecting","Providing"])
+			.range(['e.g. communicating the consequences of switches and withdrawals', 'e.g. lengthening recovery periods of underfunded DB plans, encouraging pension providers to withhold paying dividends', 'e.g. providing wage subsidies covering pension contributions', 'e.g. improving online procedures', 'e.g. warning plan members and giving them tips to avoid them', 'e.g. facilitating early access to retirement savings'])
+	if(width>750)
+		mapScale= 6.7;
+	else
+		mapScale=6.3
+
+  	var projection = d3.geoRobinson()
+	    		.scale(width/mapScale)
+	    		.translate([width / 2, 5.7*height / 10])
+  	        	.precision(.01);
+
+  	var path = d3.geoPath()
+                     .projection(projection);
+
+  	var svg = d3.select("#aboutMap").append("svg")
+  	    .attr("width", width)
+  	    .attr("height", height)
+ 
+    var worldMap=svg.append("g")
+
+	var voronoiLayer = svg.append("g");
+
+	var voronoi = d3.voronoi()
+			.x(function (d) { return projection([d.lng, d.lat])[0]; })
+			.y(function (d) { return projection([d.lng, d.lat])[1]; })
+		.extent([[-1, -1], [width + 1, height + 1]]);
+	
+	var polygons;
+	var polygonData;
+
+	d3.queue()
+	    .defer(d3.json, urls.world)
+	    .defer(d3.tsv, urls.country)
+		.defer(d3.tsv, urls.data)
+	    .await(render);
+
+
+
+
+	function render(err,world,country, data){
+
+
+		worldData=world;
+		alldata= data;
+
+		//Container for the gradients //https://www.visualcinnamon.com/2016/06/glow-filter-d3-visualization.html
+		var defs = worldMap.append("defs");
+
+		//Filter for the outside glow
+		var filter = defs.append("filter")
+		    .attr("id","glow");
+		filter.append("feGaussianBlur")
+		    .attr("stdDeviation","1.75")
+		    .attr("result","coloredBlur");
+		var feMerge = filter.append("feMerge");
+		feMerge.append("feMergeNode")
+		    .attr("in","coloredBlur");
+		feMerge.append("feMergeNode")
+		    .attr("in","SourceGraphic");
+
+	    worldMap
+	    	.attr("id","world")
+	    	.selectAll("path")
+	        .data(world.features)
+	      	.enter().append("path")
+	        .attr("class","world")
+			.attr('fill', function(d){
+				var value= "#c0c7c9";
+				data.forEach(function(k){
+					if(k.ISO3== d.id){
+						if(k['Limiting']==1)
+						value = mapColor('Limiting')
+					}
+				})
+				return value;
+			}).attr("stroke-width","1px")
+			.attr('stroke', function(d){
+				var value= "#c0c7c9";
+				data.forEach(function(k){
+					if(k.ISO3== d.id){
+						if(k['Limiting']==1)
+						value = mapColor('Limiting')
+					}
+				})
+				return value;
+			})
+			.attr("d", path)
+			
+	};	  
+    
+
+
+	function resize() {
+		// adjust things when the window size changes
+		width = document.getElementById("aboutMap").offsetWidth,
+			height = width * mapRatio;
+
+		if (width > 750)
+			mapScale = 6.7;
+		else
+			mapScale = 6.3
+		// update projection
+		projection
+			.translate([width / 2, 6 * height / 10])
+			.scale(width / mapScale);
+
+		// resize the map container
+		svg.attr('width', width + 'px')
+			.attr('height', height + 'px');
+
+		// resize the map
+		worldMap.selectAll('.world').attr('d', path);
+		//world.selectAll('.state').attr('d', path);
+
+
+		worldMap.selectAll('circle')
+			.attr("cx", function (d) {
+				return projection([d.lng, d.lat])[0];
+			})
+			.attr("cy", function (d) {
+				return projection([d.lng, d.lat])[1];
+			})
+			.attr("r", width / 300);
+
+		voronoi
+			.extent([[-1, -1], [width + 1, height + 1]]);
+
+		polygons = voronoi(polygonData).polygons();
+
+		voronoiLayer.selectAll(".cell")
+			.data(polygons)
+			.attr("fill", "none")
+			.style("pointer-events", "all")
+			.attr("stroke", "none")
+			.attr("d", function (d) { return "M" + d.join("L") + "Z"; })
+	}
+
+
+
+	function updateMap(value){
+
+
+
+	document.getElementById("introIndex").innerHTML=mapEquivalence(value)
+	
+	worldMap
+		.selectAll("path")
+		.data(worldData.features)
+		.transition().duration(500)
+		.attr("class", function (k) {
+			return "world "+ k.id;
+		})
+		.attr("stroke-width","1px")
+			.attr('stroke', function(d){
+				var basecolor = "#c0c7c9";
+			alldata.forEach(function(k){
+					if(k.ISO3== d.id){
+						console.log()
+						if(k[value]==1)
+						basecolor = mapColor(value)
+					}
+				})
+			return basecolor;
+			})
+		.attr('fill', function (d) {
+			
+			var basecolor = "#c0c7c9";
+			alldata.forEach(function(k){
+					if(k.ISO3== d.id){
+						console.log()
+						if(k[value]==1)
+						basecolor = mapColor(value)
+					}
+				})
+			return basecolor;
+		})
+
+	voronoiLayer.selectAll(".cell")
+	
+		.on('mouseover', function (d) {
+
+			var variable= value.replace(/__Level/g,"")+"__Description";
+			//var element = d3.select("#" + d.data.ISO3 + "circle")
+
+			d3.select("#" + d.data.ISO3 + "circle").attr("fill", "#e73741")
+
+			divMap.transition()
+				.duration(250)
+				.style("opacity", 1);
+
+			var icuText;
+			var tempVariable
+			allData.forEach(function(k){
+				if(d.data.ISO3==k.ISO3)
+					tempVariable=k;
+			})
+			
+			if (tempVariable[value] == 'Information not available' || tempVariable[value] == '')
+				icuText = ""
+			else
+				icuText = "<br/><b>Level: " + tempVariable[value] + "</b><Br/>"+ tempVariable[variable];
+
+			var htmlText = "<b>" + tempVariable.Country + "</b>"+   icuText;
+
+			divMap.html(htmlText)
+				.style("left", event.pageX - document.body.scrollLeft + "px")
+				.style("top", event.pageY /*- document.body.scrollTop*/ + "px");
+
+		})
+
+		.on("mousemove", function (d) {
+
+			divMap
+				.style("left", event.pageX - document.body.scrollLeft + 10 + "px")
+				.style("top", event.pageY /*- document.body.scrollTop*/ + "px");
+
+		})
+		.on('mouseout', function (d) {
+
+			if (d.data.ISO3 == "EU" || d.data.ISO3 == "SEA")
+				d3.select("#" + d.data.ISO3 + "circle").attr("fill", "#17a2b8");
+			else
+				d3.select("#" + d.data.ISO3 + "circle").attr("fill", "#04629a"/*circleColor(selector)*/);
+
+			divMap.transition()
+				.duration(100)
+				.style("opacity", 0);
+		})
+		
+}
+
+
+	d3.select(window).on('resize', resize);
+
+	
+
+
+
+	d3.selectAll(".button.grey")
+		.on("click", function () {
+			d3.selectAll(".button.grey")
+				.style("background-color", "#ffffff").style("color","#0b1e2d")
+			d3.select(this)
+				.style("background-color", "#04629a").style("color", "#ffffff")
+		})
+
+	d3.selectAll(".button.green")
+		.on("click", function () {
+			d3.selectAll(".button.green")
+				.style("background-color", "#548235")
+			d3.select(this)
+				.style("background-color", "#0b1e2d")
+		})
+
+
+	
+	if (window.location !== window.parent.location) {	  
+		// The page is in an iframe	
+		document.getElementById("toplayer").style.display = "none"
+		} else {	  
+			// The page is not in an iframe	
+		console.log("not an iframe")
+			}
+
+</script>
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-51983915-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
