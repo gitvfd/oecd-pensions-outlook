@@ -354,7 +354,7 @@ width:87.5%;
     float: left;
    /* position: relative;*/
     width: 200px;
-    height: 55px;
+    height: 75px;
     margin: 5px 5px 15px 5px;
     padding: 10px 10px 10px 10px;
     background: #FFFFFF;
@@ -374,6 +374,12 @@ width:87.5%;
     margin:auto;
 }
 
+#launchButton{
+
+        background-color:#04629a;
+        color:#ffffff;
+
+}
 .green{
     width: 200px;
     height: 60px;

@@ -71,16 +71,16 @@
 	
 	<!--End Google Tag Manager (noscript) -->
 
-<h1>Responses to COVID-19 in the area of retirement savings </h1>
+<h1>Measures to offset the impact of COVID-19 on old-age pensions and retirement savings</h1>
 	<div class="flex-container">
-		<button class="button grey" id="Dimension" type="submit" value="Limiting" onclick="updateMap(value)"><span class="textbtn">Limiting the materialisation of investment losses </span></button>
-		<button class="button grey" id="Dimension" type="submit" value="Securing" onclick="updateMap(value)"><span class="textbtn">Securing the solvency of retirement plans and the business of providers </span></button>
-		<button class="button grey" id="Dimension" type="submit" value="Subsidising" onclick="updateMap(value)"><span class="textbtn">Subsidising pension contributions </span></button>
-		<button class="button grey" id="Dimension" type="submit" value="Addressing" onclick="updateMap(value)"><span class="textbtn">Addressing operational disruptions</span></button>
-		<button class="button grey" id="Dimension" type="submit" value="Protecting" onclick="updateMap(value)"><span class="textbtn">Protecting from scams and cyber attacks</span></button>
-		<button class="button grey" id="Dimension" type="submit" value="Providing" onclick="updateMap(value)"><span class="textbtn">Providing short-term relief with potential long-term risks</span></button>
+				<button class="button grey" id="launchButton" type="submit" value="Subsidising" onclick="updateMap(value)"><span class="textbtn">Wage subsidies covering pension contributions</span></button>
+				<button class="button grey" id="Dimension" type="submit" value="Providing" onclick="updateMap(value)"><span class="textbtn">Deferral, reduction or stopping of pension contributions, or early access to retirement savings</span></button>
+				<button class="button grey" id="Dimension" type="submit" value="Securing" onclick="updateMap(value)"><span class="textbtn">Support for pension plan and provider solvency through suspended dividend payments, longer recovery periods</span></button>
+				<button class="button grey" id="Dimension" type="submit" value="Limiting" onclick="updateMap(value)"><span class="textbtn">Communications on the importance of maintaining savings and staying the course despite short-term losses</span></button>
+				<button class="button grey" id="Dimension" type="submit" value="Addressing" onclick="updateMap(value)"><span class="textbtn">Improved online procedures to offset operational disruptions</span></button>
+				<button class="button grey" id="Dimension" type="submit" value="Protecting" onclick="updateMap(value)"><span class="textbtn">Warnings and tips to avoid pension and retirement savings scams and cyber attacks</span></button>
 	</div>
-	<div class="flex-container" id="introIndex">e.g. communicating the consequences of switches and withdrawals	</div>
+	<!--<div class="flex-container" id="introIndex">e.g. communicating the consequences of switches and withdrawals	</div>-->
 	<!--<div class="flex-container-legend" id="legendChoropleth">
 		<div id="navigHeader">Level:</div>
 		<div id="scaleLegend"></div>
@@ -101,8 +101,6 @@
 	var xScale;
 	var yScale ;
 
-	var selector = "allcontext";
-	var selectorArray, selectorVariables; 
 	var worldData, alldata;
 
 	var allcircles=[];
@@ -210,8 +208,8 @@
 				var value= "#c0c7c9";
 				data.forEach(function(k){
 					if(k.ISO3== d.id){
-						if(k['Limiting']==1)
-						value = mapColor('Limiting')
+						if(k['Subsidising']==1)
+						value = mapColor('Subsidising')
 					}
 				})
 				return value;
@@ -220,8 +218,8 @@
 				var value= "#c0c7c9";
 				data.forEach(function(k){
 					if(k.ISO3== d.id){
-						if(k['Limiting']==1)
-						value = mapColor('Limiting')
+						if(k['Subsidising']==1)
+						value = mapColor('Subsidising')
 					}
 				})
 				return value;
@@ -242,7 +240,7 @@
 			.attr("stroke", "none")
 			.attr("d", function (d) { return "M" + d.join("L") + "Z"; })
 			.on('mouseover', function (d) {
-				if(d.data["Limiting"]==1){
+				if(d.data["Subsidising"]==1){
 					d3.select("#" + d.data.ISO3).style("opacity",0.5)
 					divMap.transition()
 						.duration(250)
@@ -267,11 +265,7 @@
 			.on('mouseout', function (d) {
 				
 				d3.select("#" + d.data.ISO3).style("opacity",1)
-				/**if (d.data.ISO3 == "EU" || d.data.ISO3 == "SEA")
-					d3.select("#" + d.data.ISO3 + "circle").attr("fill",  "#17a2b8");
-				else
-					d3.select("#" + d.data.ISO3 + "circle").attr("fill",  "#04629a"**//*circleColor(selector);*/
-			
+				
 				divMap.transition()
 					.duration(100)
 					.style("opacity", 0);
@@ -323,7 +317,7 @@ function resize() {
 
 
 
-	document.getElementById("introIndex").innerHTML=mapEquivalence(value)
+	//document.getElementById("introIndex").innerHTML=mapEquivalence(value)
 	
 	worldMap
 		.selectAll("path")
@@ -387,11 +381,7 @@ function resize() {
 			.on('mouseout', function (d) {
 				
 				d3.select("#" + d.data.ISO3).style("opacity",1)
-				/**if (d.data.ISO3 == "EU" || d.data.ISO3 == "SEA")
-					d3.select("#" + d.data.ISO3 + "circle").attr("fill",  "#17a2b8");
-				else
-					d3.select("#" + d.data.ISO3 + "circle").attr("fill",  "#04629a"**//*circleColor(selector);*/
-			
+				
 				divMap.transition()
 					.duration(100)
 					.style("opacity", 0);
@@ -414,13 +404,7 @@ function resize() {
 				.style("background-color", "#04629a").style("color", "#ffffff")
 		})
 
-	d3.selectAll(".button.green")
-		.on("click", function () {
-			d3.selectAll(".button.green")
-				.style("background-color", "#548235")
-			d3.select(this)
-				.style("background-color", "#0b1e2d")
-		})
+	
 
 
 	
