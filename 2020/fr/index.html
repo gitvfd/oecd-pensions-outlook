@@ -71,14 +71,14 @@
 	
 	<!--End Google Tag Manager (noscript) -->
 
-<h1>Measures to offset the impact of COVID-19 on old-age pensions and retirement savings</h1>
+<h1>Mesures visant à compenser l'impact du COVID-19 sur les pensions de vieillesse et l'épargne-retraite</h1>
 	<div class="flex-container">
-				<button class="button grey" id="launchButton" type="submit" value="Subsidising" onclick="updateMap(value)"><span class="textbtn">Wage subsidies covering pension contributions</span></button>
-				<button class="button grey" id="Dimension" type="submit" value="Providing" onclick="updateMap(value)"><span class="textbtn">Deferral, reduction or stopping of pension contributions, or early access to retirement savings</span></button>
-				<button class="button grey" id="Dimension" type="submit" value="Securing" onclick="updateMap(value)"><span class="textbtn">Support for pension plan and provider solvency through suspended dividend payments, longer recovery periods</span></button>
-				<button class="button grey" id="Dimension" type="submit" value="Limiting" onclick="updateMap(value)"><span class="textbtn">Communications on the importance of maintaining savings and staying the course despite short-term losses</span></button>
-				<button class="button grey" id="Dimension" type="submit" value="Addressing" onclick="updateMap(value)"><span class="textbtn">Improved online procedures to offset operational disruptions</span></button>
-				<button class="button grey" id="Dimension" type="submit" value="Protecting" onclick="updateMap(value)"><span class="textbtn">Warnings and tips to avoid pension and retirement savings scams and cyber attacks</span></button>
+				<button class="button grey" id="launchButton" type="submit" value="Subsidising" onclick="updateMap(value)"><span class="textbtn">Subventions salariales couvrant les cotisations de retraite</span></button>
+				<button class="button grey" id="Dimension" type="submit" value="Providing" onclick="updateMap(value)"><span class="textbtn">Report, réduction ou arrêt des cotisations de retraite, ou accès anticipé à l'épargne-retraite</span></button>
+				<button class="button grey" id="Dimension" type="submit" value="Securing" onclick="updateMap(value)"><span class="textbtn">Soutien à la solvabilité des régimes et des prestataires de retraite par la suspension du paiement des dividendes, l'allongement des périodes de recouvrement</span></button>
+				<button class="button grey" id="Dimension" type="submit" value="Limiting" onclick="updateMap(value)"><span class="textbtn">Actions de communication sur l'importance de maintenir l'épargne et de garder le cap malgré les pertes à court terme</span></button>
+				<button class="button grey" id="Dimension" type="submit" value="Addressing" onclick="updateMap(value)"><span class="textbtn">Amélioration des procédures en ligne pour compenser les perturbations opérationnelles</span></button>
+				<button class="button grey" id="Dimension" type="submit" value="Protecting" onclick="updateMap(value)"><span class="textbtn">Avertissements et conseils pour éviter les escroqueries et les cyberattaques concernant les pensions et l'épargne-retraite</span></button>
 	</div>
 	<!--<div class="flex-container" id="introIndex">e.g. communicating the consequences of switches and withdrawals	</div>-->
 	<!--<div class="flex-container-legend" id="legendChoropleth">
@@ -88,8 +88,9 @@
 	
 	</div>-->
 	<div id="aboutMap"></div>
-
 	<div id="source"><b>Source</b>: <a href="https://dx.doi.org/10.1787/67ede41b-en" target="_blank">OECD Pensions Outlook 2020</a></div>
+
+
 
 
 </body>
@@ -253,7 +254,7 @@
 						.duration(250)
 						.style("opacity", 1);
 					
-					var htmlText = "<b>" + d.data.Country + "</b>";
+					var htmlText = "<b>" + d.data.Country_FR + "</b>";
 					divMap.html(htmlText)
 						.style("left", event.pageX - document.body.scrollLeft + "px")
 						.style("top", event.pageY /*- document.body.scrollTop*/ + "px");
@@ -326,7 +327,7 @@ divWarning.transition()
 						.duration(250)
 						.style("opacity", 1);
 				
-					var htmlText = "Advice of suspending dividend payments was widespread in Europe";
+					var htmlText = "Les conseils de suspension des paiements de dividendes étaient répandus en Europe";
 					divWarning.html(htmlText)
 						//.style("left", width/2+ "px")
 						.style("top",document.getElementById("aboutMap").offsetTop+ .5*height + "px");
@@ -336,7 +337,7 @@ divWarning.transition()
 						.duration(250)
 						.style("opacity", 1);
 					
-					var htmlText = "Adjustment of supervisory activities was widespread worldwide";
+					var htmlText = "L'ajustement des activités de surveillance a été généralisé dans le monde entier";
 					divWarning.html(htmlText)
 						//.style("left", width/2+ "px")
 						.style("top",document.getElementById("aboutMap").offsetTop+ .5*height + "px");
@@ -393,7 +394,7 @@ divWarning.transition()
 						.duration(250)
 						.style("opacity", 1);
 					
-					var htmlText = "<b>" + d.data.Country + "</b>";
+					var htmlText = "<b>" + d.data.Country_FR + "</b>";
 					divMap.html(htmlText)
 						.style("left", event.pageX - document.body.scrollLeft + "px")
 						.style("top", event.pageY /*- document.body.scrollTop*/ + "px");
