@@ -71,14 +71,14 @@
 	
 	<!--End Google Tag Manager (noscript) -->
 
-<h1>Measures to offset the impact of COVID-19 on old-age pensions and retirement savings</h1>
+<h1>Maßnahmen zum Ausgleich des Effekts von COVID-19 auf Altersvorsorge</h1>
 	<div class="flex-container">
-				<button class="button grey" id="launchButton" type="submit" value="Subsidising" onclick="updateMap(value)"><span class="textbtn">Wage subsidies covering pension contributions</span></button>
-				<button class="button grey" id="Dimension" type="submit" value="Providing" onclick="updateMap(value)"><span class="textbtn">Deferral, reduction or stopping of pension contributions, or early access to retirement savings</span></button>
-				<button class="button grey" id="Dimension" type="submit" value="Securing" onclick="updateMap(value)"><span class="textbtn">Support for pension plan and provider solvency through suspended dividend payments, longer recovery periods</span></button>
-				<button class="button grey" id="Dimension" type="submit" value="Limiting" onclick="updateMap(value)"><span class="textbtn">Communications on the importance of maintaining savings and staying the course despite short-term losses</span></button>
-				<button class="button grey" id="Dimension" type="submit" value="Addressing" onclick="updateMap(value)"><span class="textbtn">Improved online procedures to offset operational disruptions</span></button>
-				<button class="button grey" id="Dimension" type="submit" value="Protecting" onclick="updateMap(value)"><span class="textbtn">Warnings and tips to avoid pension and retirement savings scams and cyber attacks</span></button>
+				<button class="button grey" id="launchButton" type="submit" value="Subsidising" onclick="updateMap(value)"><span class="textbtn">Lohnzuschüsse zur Deckung der Rentenversicherungsbeiträge</span></button>
+				<button class="button grey" id="Dimension" type="submit" value="Providing" onclick="updateMap(value)"><span class="textbtn">Stundung, Ermäßigung oder Erlass von Rentenbeiträgen od. vorzeitiger Zugriff auf Rentenersparnisse</span></button>
+				<button class="button grey" id="Dimension" type="submit" value="Securing" onclick="updateMap(value)"><span class="textbtn">Förderung der Solvenz von Altersvorsorgeanbietern durch Aussetzung der Dividendenausschüttungen / Verlängerung der Recovery Period</span></button>
+				<button class="button grey" id="Dimension" type="submit" value="Limiting" onclick="updateMap(value)"><span class="textbtn">Kommunikation über die Bedeutung der Fortsetzung der Ersparnisbildung trotz kurzfristiger Verluste</span></button>
+				<button class="button grey" id="Dimension" type="submit" value="Addressing" onclick="updateMap(value)"><span class="textbtn">Verbesserung der Online-Verfahren zur Behebung operationeller Probleme</span></button>
+				<button class="button grey" id="Dimension" type="submit" value="Protecting" onclick="updateMap(value)"><span class="textbtn">Warnhinweise und Tipps gegen Betrug und Cyberangriffe im Altersvorsorgebereich</span></button>
 	</div>
 	<!--<div class="flex-container" id="introIndex">e.g. communicating the consequences of switches and withdrawals	</div>-->
 	<!--<div class="flex-container-legend" id="legendChoropleth">
@@ -88,7 +88,7 @@
 	
 	</div>-->
 	<div id="aboutMap"></div>
-	<div id="source"><b>Source</b>: <a href="https://dx.doi.org/10.1787/67ede41b-en" target="_blank">OECD Pensions Outlook 2020</a></div>
+	<div id="source"><b>Quelle</b>: <a href="https://dx.doi.org/10.1787/67ede41b-en" target="_blank">OECD Pensions Outlook 2020</a></div>
 
 
 
@@ -327,7 +327,7 @@ divWarning.transition()
 						.duration(250)
 						.style("opacity", 1);
 				
-					var htmlText = "Advice of suspending dividend payments was widespread in Europe";
+					var htmlText = "Außer in den markierten Ländern wurde auch in weiten Teilen Europas die Aussetzung von Dividendenausschüttungen empfohlen";
 					divWarning.html(htmlText)
 						//.style("left", width/2+ "px")
 						.style("top",document.getElementById("aboutMap").offsetTop+ .5*height + "px");
@@ -337,7 +337,7 @@ divWarning.transition()
 						.duration(250)
 						.style("opacity", 1);
 					
-					var htmlText = "Adjustment of supervisory activities was widespread worldwide";
+					var htmlText = "Zur Bewältigung der aus Kontaktbeschränkungen o. Ä. erwachsenden Schwierigkeiten wurden weltweit Aufsichtsfunktionen angepasst und Leitlinien für Altersvorsorgeanbieter herausgegeben";
 					divWarning.html(htmlText)
 						//.style("left", width/2+ "px")
 						.style("top",document.getElementById("aboutMap").offsetTop+ .5*height + "px");
